@@ -1,4 +1,4 @@
-﻿int[] arrayInts = { 10, 20, 50, 40, 30,};
+﻿int[] arrayInts = { 10, 20, 50, 40, 30};
 
 int maxLength = arrayInts.Length;
 
@@ -20,7 +20,7 @@ for (int i = 0; i < arrayLength; i++)
 static int[] QuickSort(int[] arrayInts, int maxLength)
 {
     Random rng = new Random();
-    int number = arrayInts[rng.Next(0, maxLength)];
+    int pivot = arrayInts[rng.Next(0, maxLength)];
     int[] newArray = new int[maxLength]; // Makes the new array that we are going to return
 
 
@@ -28,10 +28,12 @@ static int[] QuickSort(int[] arrayInts, int maxLength)
     int counter = 0;
     int counterLower = 0;
     int counterUpper = 0;
+    int counterPivot = 0;
 
     //we makes 2 new Arrays, one for values lower then pivot and one for higher or equal pivot
     int[] lowerArray = new int[maxLength];
     int[] upperArray = new int[maxLength];
+    int[] pivotArray = new int[maxLength];
 
 
     //sort the numbers into the temp arrays 
@@ -39,16 +41,23 @@ static int[] QuickSort(int[] arrayInts, int maxLength)
     {
         if (i != 0)
         {
-            if (i <= number)
+            if (i < pivot)
             {
                 lowerArray[counterLower] = i;
                 counterLower++;
             }
-
-            else if (i > number)
+            else if (i > pivot)
             {
                 upperArray[counterUpper] = i;
                 counterUpper++;
+            }
+            else
+            {
+                if (counterPivot > 0)
+                {
+                    pivotArray[counterPivot-1] = i;
+                }
+                counterPivot++;
             }
         }
     }
@@ -68,6 +77,18 @@ static int[] QuickSort(int[] arrayInts, int maxLength)
 
     //puts the values from the lowerArray in the newArray
     foreach (int j in lowerArray)
+    {
+        if (j != 0)
+        {
+            newArray[counter] = j;
+            counter++;
+        }
+    }
+
+    newArray[counter] = pivot;
+    counter++;
+
+    foreach (int j in pivotArray)
     {
         if (j != 0)
         {
